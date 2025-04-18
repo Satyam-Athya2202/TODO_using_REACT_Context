@@ -1,6 +1,8 @@
 import React from 'react'
 import { useTodo } from '../context/TodoContext';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+
 
 const TodoItem = ({todo}) => {
 
@@ -13,7 +15,7 @@ const [todoMsg,setTodoMsg]=useState(todo.todo)
 
 
 const editTodo=()=>{
-updatedTodo(todo.id,{...todo,todo:todoMsg})
+updatedTodo(todo.id,{...todo,todo:todoMsg});
 setEditable(false)
 } 
 
@@ -23,11 +25,17 @@ const taskCompleted=()=>{
 
 
   return (
-    <div
-    className={`flex border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm shadow-white/50 duration-300  text-black ${
-        todo.completed ? "bg-[#c6e9a7]" : "bg-[#ccbed7]"
+    <motion.div
+    className={`flex border border-black/10 rounded-lg px-3 py-1.5 gap-x-3 shadow-sm 
+       overflow-hidden  shadow-white/50 duration-300 text-black ${
+      todo.completed ? "bg-[#c6e9a7]" : "bg-[#ccbed7]"
     }`}
->
+    initial={{ opacity: 0, x: -50,y:-50 }}
+    animate={{ opacity: 1, x: 0,y:0,transition:{staggerChildren:0.5}}}
+    exit={{ opacity: 0, scale:1 }}
+    transition={{ duration: 0.2 }}
+  >
+  
     <input
         type="checkbox"
         className="cursor-pointer"
@@ -65,7 +73,7 @@ const taskCompleted=()=>{
     >
         ❌
     </button>
-</div>
+</motion.div>
   )
 }
 

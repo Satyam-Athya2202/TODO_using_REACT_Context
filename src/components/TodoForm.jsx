@@ -12,8 +12,9 @@ const addingTask=(e)=>{
   console.log("submkited");
   
 if(!todoTask){return} 
-// we are spreading the object in addTodo thats why here we need to pass an object
 
+
+// we are spreading the object in addTodo thats why here we need to pass an object
 
 // isme id nhi rakhte hain kyunki wese bhi hum id to de hi rhe hain context create krte time app.jsx me id se render kr 
 addTodo({

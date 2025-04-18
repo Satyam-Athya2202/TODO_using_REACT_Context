@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { TodoProvider } from "./TodoContext";
+import { toast } from 'react-hot-toast';
+
 
 export const ToDoContextProvider= ({ children }) =>{
 
@@ -9,10 +11,11 @@ export const ToDoContextProvider= ({ children }) =>{
   // Adding a new todo
 
   const addTodo = (todo) => {
-    //now the AllTodos are is an object so cant just directly pass the todo we need to pass the  object{}
+    //now the AllTodos are is an object so we can't just directly pass the todo we need to pass the  object{}.
 
-    // also  hum ...todo use kr lenge kyunki baar baar kon hi todo aur completed likhe
+    // also  hum (...todo) use kr lenge kyunki baar baar kon hi todo aur completed likhe
     setAllTodos((prev) => [...prev, { id: Date.now(), ...todo }]);
+    toast.success("Todo added!");
   };
   
   // Updating an existing todo
@@ -22,12 +25,14 @@ export const ToDoContextProvider= ({ children }) =>{
     setAllTodos((prev) =>
       prev.map((prevTodo) => (prevTodo.id === id ? todo : prevTodo))
     );
+    toast("Todo updated ✏️", { icon: "📝" });
   };
-
+ 
   // Deleting a todo
   // yaha pr dekho jb  hum delete functionality create karte hai tb hum chahte hai ki jo id hum pass kr rhe hai wo bs na ho baki sari hon
   const deleteTodo = (id) => {
     setAllTodos((prev) => prev.filter((prevTodo) => prevTodo.id !== id));
+    toast.error("Todo deleted");
   };
 
 
@@ -47,7 +52,7 @@ export const ToDoContextProvider= ({ children }) =>{
 
 useEffect(()=>{
 
-  // yaha ye wala allTodos ek local varibale hai as you can se hum isko directly update kr set hai bina set use kiye huye
+  // yaha ye wala storedTodos ek local varibale hai as you can se hum isko directly update kr set hai bina set use kiye huye
  const storedTodos= JSON.parse(localStorage.getItem("allTodos")) || [];
 
  if(storedTodos && storedTodos.length>0){
